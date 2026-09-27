@@ -1,1 +1,3010 @@
-<!doctype html><html><head><title>Redirecting...</title><meta http-equiv="refresh" content="0; url=https://nothingbuttyler.github.io" /><style> .bottom-text { position: fixed; bottom: 0; left: 0; width: 100%; color: white; }</style></head><body style="color:white;background-color:black;"><center><p>Redirecting...</p></center><p class="bottom-text">5TRIKELE5S site coming soon...</p></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#030303">
+
+<title>5TRIKELE5S — Music</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+    --black: #030303;
+    --white: #f4f4f4;
+    --muted: #777;
+    --red: #ff2638;
+    --blue: #287dff;
+
+    --mx: 50%;
+    --my: 50%;
+    --scroll: 0;
+
+    --audio: 0;
+    --bass: 0;
+    --glitch: 0px;
+    --rgb: 0px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Keep the native cursor hidden wherever the custom cursor is active. */
+html,
+body,
+a,
+button,
+.interactive {
+    cursor: none !important;
+}
+
+html {
+    scroll-behavior: smooth;
+    background: var(--black);
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at var(--mx) var(--my),
+            rgba(40,125,255,.045),
+            transparent 22%
+        ),
+        #030303;
+
+    color: var(--white);
+    font-family: Inter, Arial, sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+
+    transition:
+        filter .08s linear,
+        background .3s ease;
+}
+
+/* =========================================================
+   GLOBAL GLITCH LAYERS
+========================================================= */
+
+.glitch-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1900;
+    opacity: 0;
+    mix-blend-mode: screen;
+}
+
+.glitch-layer.red {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255,38,56,.18),
+            transparent 35%,
+            transparent 65%,
+            rgba(255,38,56,.05)
+        );
+    transform: translateX(-2px);
+}
+
+.glitch-layer.blue {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(40,125,255,.05),
+            transparent 35%,
+            transparent 65%,
+            rgba(40,125,255,.18)
+        );
+    transform: translateX(2px);
+}
+
+body.glitching .glitch-layer {
+    animation: screenGlitch .14s steps(2) both;
+}
+
+@keyframes screenGlitch {
+    0% {
+        opacity: 0;
+        clip-path: inset(0 0 100% 0);
+    }
+
+    20% {
+        opacity: .9;
+        clip-path: inset(12% 0 70% 0);
+    }
+
+    40% {
+        opacity: .4;
+        clip-path: inset(55% 0 20% 0);
+    }
+
+    65% {
+        opacity: .8;
+        clip-path: inset(30% 0 42% 0);
+    }
+
+    100% {
+        opacity: 0;
+        clip-path: inset(100% 0 0 0);
+    }
+}
+
+body.signal-loss {
+    animation: signalLoss .12s steps(2);
+}
+
+@keyframes signalLoss {
+    0% {
+        filter: none;
+    }
+
+    25% {
+        filter: contrast(1.5) brightness(.65);
+    }
+
+    50% {
+        filter: brightness(1.4);
+    }
+
+    75% {
+        filter: contrast(.7);
+    }
+
+    100% {
+        filter: none;
+    }
+}
+
+/* =========================================================
+   ATMOSPHERE
+========================================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: -50%;
+    z-index: 999;
+    pointer-events: none;
+
+    opacity: calc(.045 + (var(--audio) * .06));
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.65'/%3E%3C/svg%3E");
+
+    animation: noise .18s steps(2) infinite;
+}
+
+@keyframes noise {
+    0% { transform: translate(0,0); }
+    25% { transform: translate(2%,-3%); }
+    50% { transform: translate(-3%,2%); }
+    75% { transform: translate(3%,3%); }
+    100% { transform: translate(-2%,-2%); }
+}
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 998;
+
+    opacity: calc(.035 + (var(--audio) * .035));
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 3px,
+            rgba(255,255,255,.08) 4px
+        );
+}
+
+.scanlines::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            transparent 0,
+            transparent 180px,
+            rgba(255,38,56,.025) 181px,
+            transparent 182px,
+            transparent 360px,
+            rgba(40,125,255,.025) 361px
+        );
+
+    transform: translateX(calc(var(--glitch) * 3));
+}
+
+.ambient {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.ambient::before,
+.ambient::after {
+    content: "";
+    position: absolute;
+    width: 45vw;
+    height: 45vw;
+    border-radius: 50%;
+    filter: blur(100px);
+
+    transition:
+        transform 1s cubic-bezier(.2,.8,.2,1),
+        opacity .5s ease;
+}
+
+.ambient::before {
+    background: var(--blue);
+    left: calc(var(--mx) - 22vw);
+    top: calc(var(--my) - 22vw);
+    opacity: calc(.035 + var(--audio) * .08);
+}
+
+.ambient::after {
+    background: var(--red);
+    right: -20vw;
+    bottom: -20vw;
+    opacity: calc(.035 + var(--bass) * .1);
+}
+
+/* =========================================================
+   CUSTOM CURSOR
+========================================================= */
+
+.cursor,
+.cursor-ghost-red,
+.cursor-ghost-blue {
+    position: fixed;
+    width: 9px;
+    height: 9px;
+
+    border: 1px solid rgba(255,255,255,.9);
+    border-radius: 50%;
+
+    pointer-events: none;
+    z-index: 2000;
+
+    transform: translate(-50%,-50%);
+}
+
+.cursor {
+    transition:
+        width .2s ease,
+        height .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+}
+
+.cursor-ghost-red,
+.cursor-ghost-blue {
+    opacity: 0;
+    z-index: 1999;
+}
+
+.cursor-ghost-red {
+    border-color: rgba(255,38,56,.55);
+}
+
+.cursor-ghost-blue {
+    border-color: rgba(40,125,255,.55);
+}
+
+.cursor.active {
+    width: 44px;
+    height: 44px;
+
+    border-color: rgba(255,255,255,.35);
+
+    background: rgba(255,255,255,.025);
+
+    box-shadow:
+        -5px 0 15px rgba(255,38,56,.25),
+        5px 0 15px rgba(40,125,255,.25);
+}
+
+.cursor-label {
+    position: fixed;
+    pointer-events: none;
+    z-index: 2001;
+
+    font-size: 8px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+
+    opacity: 0;
+
+    transform: translate(-50%,-50%);
+
+    transition: opacity .2s ease;
+}
+
+.cursor-label.show {
+    opacity: 1;
+}
+
+/* =========================================================
+   NAV
+========================================================= */
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 86px;
+    padding: 0 5vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    z-index: 100;
+
+    mix-blend-mode: difference;
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .32em;
+
+    position: relative;
+}
+
+.logo::after {
+    content: "";
+
+    position: absolute;
+
+    width: 4px;
+    height: 4px;
+
+    background: var(--red);
+
+    border-radius: 50%;
+
+    right: -11px;
+    top: 3px;
+
+    box-shadow: 6px 0 var(--blue);
+}
+
+.nav {
+    display: flex;
+    gap: 32px;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+
+    opacity: .55;
+
+    transition:
+        opacity .25s ease,
+        transform .25s ease;
+}
+
+.nav a:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+/* =========================================================
+   SIGNAL INDEX
+========================================================= */
+
+.signal-index {
+    position: fixed;
+    left: 5vw;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    z-index: 50;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.signal-index button {
+    appearance: none;
+    border: 0;
+    background: none;
+    color: white;
+
+    width: 20px;
+    height: 20px;
+
+    font-size: 8px;
+    font-family: inherit;
+
+    opacity: .25;
+
+    cursor: none;
+
+    transition:
+        opacity .25s ease,
+        transform .25s ease;
+}
+
+.signal-index button::before {
+    content: "";
+
+    display: block;
+
+    width: 4px;
+    height: 4px;
+
+    margin: auto;
+
+    border-radius: 50%;
+    background: white;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+.signal-index button.active {
+    opacity: 1;
+}
+
+.signal-index button.active::before {
+    transform: scale(1.6);
+
+    box-shadow:
+        -4px 0 var(--red),
+        4px 0 var(--blue);
+}
+
+/* =========================================================
+   SCENES
+========================================================= */
+
+.scene {
+    position: relative;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.scene-inner {
+    width: min(1200px,90vw);
+    position: relative;
+}
+
+/* =========================================================
+   VOID
+========================================================= */
+
+#void {
+    min-height: 115vh;
+}
+
+.void-mark {
+    position: absolute;
+    top: -20vh;
+    left: 0;
+
+    font-size: 8px;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+
+    color: #555;
+}
+
+.void-content {
+    text-align: center;
+
+    transform:
+        translateY(calc(var(--scroll) * -.08px));
+}
+
+.kicker {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .4em;
+
+    color: #666;
+
+    margin-bottom: 34px;
+}
+
+.main-title {
+    position: relative;
+
+    font-size: clamp(4.2rem,14vw,13rem);
+    line-height: .8;
+
+    font-weight: 900;
+    letter-spacing: -.075em;
+
+    user-select: none;
+
+    transition:
+        transform .15s linear,
+        text-shadow .1s linear;
+
+    text-shadow:
+        calc(var(--rgb) * -1) 0 rgba(255,38,56,.18),
+        var(--rgb) 0 rgba(40,125,255,.18);
+}
+
+.main-title::before,
+.main-title::after {
+    content: "5TRIKELE5S";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0;
+}
+
+.main-title::before {
+    color: var(--red);
+    transform: translateX(calc(-3px - var(--glitch)));
+    clip-path: inset(20% 0 45% 0);
+}
+
+.main-title::after {
+    color: var(--blue);
+    transform: translateX(calc(3px + var(--glitch)));
+    clip-path: inset(55% 0 10% 0);
+}
+
+.main-title.glitch::before,
+.main-title.glitch::after {
+    opacity: .85;
+}
+
+.main-title.glitch {
+    animation: titleGlitch .16s steps(2);
+}
+
+@keyframes titleGlitch {
+    0% {
+        transform: translate(0);
+    }
+
+    20% {
+        transform: translate(-5px,1px) skewX(-2deg);
+    }
+
+    45% {
+        transform: translate(4px,-2px) skewX(3deg);
+    }
+
+    70% {
+        transform: translate(-2px,2px);
+    }
+
+    100% {
+        transform: translate(0);
+    }
+}
+
+.slogan {
+    margin-top: 42px;
+
+    font-size: clamp(12px,1.4vw,16px);
+
+    color: #aaa;
+
+    letter-spacing: .04em;
+}
+
+.enter {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+
+    margin-top: 70px;
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 9px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+
+    opacity: .6;
+
+    transition:
+        opacity .25s ease,
+        gap .35s ease;
+}
+
+.enter:hover {
+    opacity: 1;
+    gap: 24px;
+}
+
+.enter span {
+    width: 38px;
+    height: 1px;
+    background: white;
+}
+
+/* =========================================================
+   FLOATING CODE
+========================================================= */
+
+.corner {
+    position: absolute;
+
+    font-size: 7px;
+    line-height: 1.7;
+
+    color: #444;
+    letter-spacing: .15em;
+
+    text-transform: uppercase;
+}
+
+.corner.one {
+    right: 0;
+    top: 8vh;
+}
+
+.corner.two {
+    left: 0;
+    bottom: 9vh;
+}
+
+.corner .blue {
+    color: var(--blue);
+}
+
+.corner .red {
+    color: var(--red);
+}
+
+/* =========================================================
+   RELEASE
+========================================================= */
+
+#release {
+    min-height: 130vh;
+}
+
+.release-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    align-items: center;
+
+    gap: 8vw;
+}
+
+.release-art {
+    position: relative;
+
+    width: min(600px,42vw);
+    aspect-ratio: 1;
+
+    transform:
+        rotate(-3deg)
+        translateY(calc(var(--scroll) * -.025px));
+
+    transition:
+        transform .5s cubic-bezier(.2,.8,.2,1);
+}
+
+.release-art img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    position: relative;
+    z-index: 1;
+
+    filter:
+        contrast(calc(1 + var(--audio) * .15))
+        saturate(calc(1 + var(--audio) * .3));
+
+    transform:
+        translate(
+            calc(var(--glitch) * 1px),
+            calc(var(--bass) * -3px)
+        );
+
+    transition:
+        filter .2s ease;
+}
+
+.release-art::before,
+.release-art::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 2;
+
+    opacity: 0;
+}
+
+.release-art::before {
+    background: var(--red);
+
+    mix-blend-mode: screen;
+
+    transform:
+        translateX(calc(-1 * var(--rgb)));
+}
+
+.release-art::after {
+    background: var(--blue);
+
+    mix-blend-mode: screen;
+
+    transform:
+        translateX(var(--rgb));
+}
+
+.release-art.glitch-art::before,
+.release-art.glitch-art::after {
+    opacity: .18;
+}
+
+.art-frame {
+    position: absolute;
+    inset: -15px;
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    transform: translate(12px,12px);
+
+    z-index: 0;
+
+    transition:
+        transform .3s ease;
+}
+
+.release-number {
+    position: absolute;
+
+    top: -35px;
+    right: -25px;
+
+    font-size: 8px;
+    color: #555;
+
+    letter-spacing: .3em;
+
+    z-index: 4;
+}
+
+.release-info {
+    position: relative;
+}
+
+.release-label {
+    font-size: 8px;
+    color: #555;
+
+    text-transform: uppercase;
+    letter-spacing: .35em;
+
+    margin-bottom: 28px;
+}
+
+.release-title {
+    font-size: clamp(3.5rem,7vw,7rem);
+
+    line-height: .8;
+
+    letter-spacing: -.075em;
+    font-weight: 900;
+
+    position: relative;
+}
+
+.release-title span {
+    display: block;
+}
+
+.release-title::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 50%;
+
+    width: calc(var(--audio) * 20%);
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--red),
+            var(--blue),
+            transparent
+        );
+
+    opacity: .6;
+}
+
+.release-meta {
+    margin-top: 40px;
+
+    display: flex;
+    gap: 25px;
+
+    color: #666;
+
+    font-size: 9px;
+
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+.release-description {
+    max-width: 400px;
+
+    margin-top: 28px;
+
+    color: #888;
+
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.stream-link {
+    display: inline-flex;
+
+    margin-top: 40px;
+
+    color: white;
+    text-decoration: none;
+
+    border-bottom: 1px solid rgba(255,255,255,.3);
+
+    padding-bottom: 8px;
+
+    font-size: 9px;
+
+    text-transform: uppercase;
+    letter-spacing: .25em;
+
+    transition:
+        border-color .25s ease,
+        padding .25s ease;
+}
+
+.stream-link:hover {
+    border-color: white;
+    padding-bottom: 12px;
+}
+
+/* =========================================================
+   GENRE
+========================================================= */
+
+#genre {
+    min-height: 110vh;
+}
+
+.genre-content {
+    position: relative;
+}
+
+.genre-small {
+    color: #555;
+
+    font-size: 8px;
+    letter-spacing: .4em;
+    text-transform: uppercase;
+
+    margin-bottom: 50px;
+}
+
+.genre-title {
+    font-size: clamp(4rem,11vw,11rem);
+
+    line-height: .78;
+
+    letter-spacing: -.08em;
+    font-weight: 900;
+}
+
+.genre-title .line {
+    display: block;
+}
+
+.genre-title .offset {
+    margin-left: 12vw;
+}
+
+.genre-title .outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,.4);
+
+    text-shadow:
+        calc(var(--rgb) * -1) 0 rgba(255,38,56,.4),
+        var(--rgb) 0 rgba(40,125,255,.4);
+}
+
+.genre-copy {
+    width: min(430px,80vw);
+
+    margin-top: 65px;
+    margin-left: 12vw;
+
+    color: #777;
+
+    font-size: 12px;
+    line-height: 2;
+}
+
+.genre-copy strong {
+    color: #ddd;
+    font-weight: 500;
+}
+
+/* =========================================================
+   TRANSMISSION
+========================================================= */
+
+#transmission {
+    min-height: 100vh;
+}
+
+.transmission {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    border-top: 1px solid rgba(255,255,255,.12);
+}
+
+.transmission-link {
+    min-height: 300px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    color: white;
+    text-decoration: none;
+
+    border-bottom: 1px solid rgba(255,255,255,.12);
+
+    overflow: hidden;
+}
+
+.transmission-link:first-child {
+    border-right: 1px solid rgba(255,255,255,.12);
+}
+
+.transmission-link::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(40,125,255,.13),
+            transparent 45%
+        );
+
+    opacity: 0;
+
+    transition: opacity .5s ease;
+}
+
+.transmission-link:last-child::before {
+    background:
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255,38,56,.13),
+            transparent 45%
+        );
+}
+
+.transmission-link:hover::before {
+    opacity: 1;
+}
+
+.transmission-text {
+    position: relative;
+    z-index: 2;
+
+    text-align: center;
+
+    transition:
+        transform .5s cubic-bezier(.2,.8,.2,1);
+}
+
+.transmission-link:hover .transmission-text {
+    transform: scale(1.08);
+}
+
+.transmission-number {
+    display: block;
+
+    color: #555;
+
+    font-size: 8px;
+    letter-spacing: .3em;
+
+    margin-bottom: 20px;
+}
+
+.transmission-name {
+    font-size: clamp(2rem,5vw,5rem);
+
+    font-weight: 900;
+    letter-spacing: -.07em;
+}
+
+/* =========================================================
+   END
+========================================================= */
+
+#end {
+    min-height: 120vh;
+}
+
+.end-content {
+    text-align: center;
+}
+
+.end-title {
+    font-size: clamp(3rem,9vw,9rem);
+
+    font-weight: 900;
+    letter-spacing: -.08em;
+
+    line-height: .8;
+}
+
+.end-subtitle {
+    margin-top: 45px;
+
+    font-size: 11px;
+    color: #777;
+
+    letter-spacing: .08em;
+}
+
+.end-links {
+    margin-top: 60px;
+
+    display: flex;
+    justify-content: center;
+
+    gap: 30px;
+}
+
+.end-links a {
+    color: #aaa;
+    text-decoration: none;
+
+    font-size: 8px;
+
+    text-transform: uppercase;
+    letter-spacing: .3em;
+
+    transition:
+        color .25s ease,
+        transform .25s ease;
+}
+
+.end-links a:hover {
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* =========================================================
+   REAL AUDIO PLAYER
+========================================================= */
+
+.player {
+    position: fixed;
+
+    left: 50%;
+    bottom: 22px;
+
+    transform: translateX(-50%);
+
+    width: min(620px,88vw);
+
+    z-index: 150;
+
+    padding: 13px 17px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    background: rgba(5,5,5,.78);
+
+    border: 1px solid rgba(255,255,255,.1);
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 20px 80px rgba(0,0,0,.5);
+
+    transition:
+        border-color .3s ease,
+        box-shadow .3s ease,
+        transform .3s ease;
+}
+
+.player.playing {
+    border-color: rgba(255,255,255,.2);
+
+    box-shadow:
+        -20px 0 70px rgba(255,38,56,.09),
+        20px 0 70px rgba(40,125,255,.09);
+}
+
+.player-button {
+    width: 32px;
+    height: 32px;
+
+    border: 1px solid rgba(255,255,255,.25);
+
+    border-radius: 50%;
+
+    background: transparent;
+    color: white;
+
+    cursor: none;
+
+    font-size: 9px;
+
+    flex-shrink: 0;
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.player-button:hover {
+    background: rgba(255,255,255,.1);
+    transform: scale(1.08);
+}
+
+.player-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.player-track {
+    font-size: 9px;
+
+    letter-spacing: .15em;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.player-status {
+    margin-top: 5px;
+
+    color: #555;
+
+    font-size: 7px;
+
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+.player-progress {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: -1px;
+
+    height: 1px;
+
+    background: rgba(255,255,255,.08);
+}
+
+.player-progress-fill {
+    height: 100%;
+
+    width: 0%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--red),
+            var(--blue)
+        );
+
+    box-shadow:
+        0 0 12px rgba(40,125,255,.5);
+}
+
+.player-time {
+    color: #555;
+
+    font-size: 7px;
+    letter-spacing: .1em;
+
+    white-space: nowrap;
+}
+
+.player-wave {
+    display: flex;
+    align-items: center;
+
+    gap: 2px;
+
+    height: 25px;
+}
+
+.player-wave i {
+    display: block;
+
+    width: 2px;
+    height: 6px;
+
+    background: #777;
+
+    animation:
+        wave .9s ease-in-out infinite;
+
+    animation-play-state: paused;
+}
+
+.player.playing .player-wave i {
+    animation-play-state: running;
+}
+
+.player-wave i:nth-child(2) {
+    animation-delay: -.8s;
+    height: 13px;
+}
+
+.player-wave i:nth-child(3) {
+    animation-delay: -.5s;
+    height: 18px;
+}
+
+.player-wave i:nth-child(4) {
+    animation-delay: -.2s;
+    height: 10px;
+}
+
+.player-wave i:nth-child(5) {
+    animation-delay: -.7s;
+    height: 15px;
+}
+
+.player-wave i:nth-child(6) {
+    animation-delay: -.3s;
+    height: 7px;
+}
+
+@keyframes wave {
+    0%,100% {
+        transform: scaleY(.5);
+    }
+
+    50% {
+        transform: scaleY(1.4);
+    }
+}
+
+/* =========================================================
+   AUDIO VISUAL STATE
+========================================================= */
+
+body.music-playing .main-title {
+    animation:
+        titlePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes titlePulse {
+    0%,100% {
+        text-shadow:
+            calc(var(--rgb) * -1) 0 rgba(255,38,56,.15),
+            var(--rgb) 0 rgba(40,125,255,.15);
+    }
+
+    50% {
+        text-shadow:
+            calc(var(--rgb) * -2) 0 rgba(255,38,56,.3),
+            calc(var(--rgb) * 2) 0 rgba(40,125,255,.3);
+    }
+}
+
+body.music-playing .release-art {
+    transform:
+        rotate(calc(-3deg + var(--bass) * 2deg))
+        translate(
+            calc(var(--glitch) * 1px),
+            calc(var(--bass) * -5px)
+        );
+}
+
+body.music-playing .release-art::before,
+body.music-playing .release-art::after {
+    opacity: calc(.03 + var(--audio) * .15);
+}
+
+body.music-playing .player {
+    transform:
+        translateX(-50%)
+        translateY(calc(var(--bass) * -2px));
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width:800px) {
+
+    /*
+        Small desktop/browser windows still use the custom cursor.
+        Only true touch devices fall back to the native cursor.
+    */
+
+    .topbar {
+        height: 70px;
+        padding: 0 6vw;
+    }
+
+    .nav {
+        gap: 14px;
+    }
+
+    .nav a {
+        font-size: 7px;
+    }
+
+    .signal-index {
+        display: none;
+    }
+
+    .scene-inner {
+        width: 86vw;
+    }
+
+    .main-title {
+        font-size: 18vw;
+    }
+
+    .slogan {
+        line-height: 1.7;
+
+        max-width: 300px;
+
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .corner {
+        display: none;
+    }
+
+    .release-layout {
+        grid-template-columns: 1fr;
+        gap: 70px;
+    }
+
+    .release-art {
+        width: 80vw;
+        max-width: 500px;
+        margin: auto;
+    }
+
+    .release-title {
+        font-size: 18vw;
+    }
+
+    .genre-title {
+        font-size: 17vw;
+    }
+
+    .genre-title .offset {
+        margin-left: 8vw;
+    }
+
+    .genre-copy {
+        margin-left: 8vw;
+    }
+
+    .transmission {
+        grid-template-columns: 1fr;
+    }
+
+    .transmission-link:first-child {
+        border-right: 0;
+    }
+
+    .transmission-link {
+        min-height: 220px;
+    }
+
+    .end-title {
+        font-size: 16vw;
+    }
+
+    .player {
+        bottom: 12px;
+        width: 92vw;
+    }
+
+    .player-time {
+        display: none;
+    }
+}
+
+/*
+   TOUCH DEVICES
+   Phones/tablets don't have a real mouse cursor, so let the
+   browser handle touch normally. Small desktop windows still
+   keep the 5TRIKELE5S custom cursor.
+*/
+@media (hover: none) and (pointer: coarse) {
+
+    html,
+    body,
+    a,
+    button,
+    .interactive {
+        cursor: auto !important;
+    }
+
+    .cursor,
+    .cursor-ghost-red,
+    .cursor-ghost-blue,
+    .cursor-label {
+        display: none;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion:reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
+
+        transition-duration: .001ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- GLOBAL EFFECTS -->
+<div class="ambient"></div>
+<div class="scanlines"></div>
+
+<div class="glitch-layer red"></div>
+<div class="glitch-layer blue"></div>
+
+<!-- CURSOR -->
+<div class="cursor"></div>
+<div class="cursor-ghost-red"></div>
+<div class="cursor-ghost-blue"></div>
+<div class="cursor-label">enter</div>
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<header class="topbar">
+
+    <a href="#" class="logo interactive">
+        5TRIKELE5S
+    </a>
+
+    <nav class="nav">
+
+        <a href="#void" class="interactive">
+            Void
+        </a>
+
+        <a href="music/" class="interactive">
+            Music
+        </a>
+
+        <a href="socials/" class="interactive">
+            Socials
+        </a>
+
+    </nav>
+
+</header>
+
+<!-- =====================================================
+     SIGNAL INDEX
+===================================================== -->
+
+<div class="signal-index">
+
+    <button
+        class="active"
+        data-target="void"
+        aria-label="Void">
+    </button>
+
+    <button
+        data-target="release"
+        aria-label="Release">
+    </button>
+
+    <button
+        data-target="genre"
+        aria-label="Genre">
+    </button>
+
+    <button
+        data-target="transmission"
+        aria-label="Transmission">
+    </button>
+
+    <button
+        data-target="end"
+        aria-label="End">
+    </button>
+
+</div>
+
+<!-- =====================================================
+     01 — THE VOID
+===================================================== -->
+
+<section class="scene" id="void">
+
+    <div class="scene-inner">
+
+        <div class="void-mark">
+            signal / 001
+        </div>
+
+        <div class="void-content">
+
+            <div class="kicker">
+                independent music project
+            </div>
+
+            <h1
+                class="main-title"
+                id="mainTitle"
+                data-text="5TRIKELE5S">
+                5TRIKELE5S
+            </h1>
+
+            <p class="slogan">
+                just making music from wherever my mood takes me
+            </p>
+
+            <a
+                href="#release"
+                class="enter interactive">
+
+                enter the signal
+
+                <span></span>
+
+            </a>
+
+        </div>
+
+        <div class="corner one">
+
+            SYSTEM STATUS<br>
+
+            <span class="blue">
+                ONLINE
+            </span><br>
+
+            signal detected
+
+        </div>
+
+        <div class="corner two">
+
+            5TRIKELE5S / 2026<br>
+
+            <span class="red">
+                do not adjust
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     02 — RELEASE
+===================================================== -->
+
+<section class="scene" id="release">
+
+    <div class="scene-inner">
+
+        <div class="release-layout">
+
+            <div
+                class="release-art interactive"
+                id="releaseArt">
+
+                <img
+                    src="assets/covers/5trikele5sdrivingovertimecover.jpg"
+                    alt="driving overtime cover art">
+
+                <div class="art-frame"></div>
+
+                <div class="release-number">
+                    release / 001
+                </div>
+
+            </div>
+
+            <div class="release-info">
+
+                <div class="release-label">
+                    first transmission
+                </div>
+
+                <h2 class="release-title">
+
+                    <span>
+                        driving
+                    </span>
+
+                    <span>
+                        overtime
+                    </span>
+
+                </h2>
+
+                <div class="release-meta">
+
+                    <span>
+                        20.08.2026
+                    </span>
+
+                    <span>
+                        HARDTEKK
+                    </span>
+
+                </div>
+
+                <p class="release-description">
+
+                    my first ever song — and my first ever
+                    hardstyle song as well :).
+
+                </p>
+
+                <a
+                    class="stream-link interactive"
+                    href="stream/?sn=drivingovertime">
+
+                    stream driving overtime →
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     03 — NO GENRE
+===================================================== -->
+
+<section class="scene" id="genre">
+
+    <div class="scene-inner">
+
+        <div class="genre-content">
+
+            <div class="genre-small">
+                signal / 003
+            </div>
+
+            <h2 class="genre-title">
+
+                <span class="line">
+                    THERE
+                </span>
+
+                <span class="line offset outline">
+                    IS NO
+                </span>
+
+                <span class="line">
+                    GENRE.
+                </span>
+
+            </h2>
+
+            <p class="genre-copy">
+
+                Sometimes it's loud.
+                Sometimes it's quiet.
+                Sometimes it's something completely different.
+
+                <br><br>
+
+                <strong>
+                    Whatever comes next depends on whatever
+                    feels right to make.
+                </strong>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     04 — TRANSMISSION
+===================================================== -->
+
+<section class="scene" id="transmission">
+
+    <div class="scene-inner">
+
+        <div class="transmission">
+
+            <a
+                href="music/"
+                class="transmission-link interactive">
+
+                <div class="transmission-text">
+
+                    <span class="transmission-number">
+                        04 / 01
+                    </span>
+
+                    <span class="transmission-name">
+                        MUSIC
+                    </span>
+
+                </div>
+
+            </a>
+
+            <a
+                href="socials/"
+                class="transmission-link interactive">
+
+                <div class="transmission-text">
+
+                    <span class="transmission-number">
+                        04 / 02
+                    </span>
+
+                    <span class="transmission-name">
+                        SOCIALS
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     05 — END
+===================================================== -->
+
+<section class="scene" id="end">
+
+    <div class="scene-inner">
+
+        <div class="end-content">
+
+            <h2 class="end-title">
+
+                SEE YOU<br>
+                IN THE NEXT SONG.
+
+            </h2>
+
+            <p class="end-subtitle">
+
+                just making music from wherever my mood takes me
+
+            </p>
+
+            <div class="end-links">
+
+                <a
+                    href="#void"
+                    class="interactive">
+
+                    return
+
+                </a>
+
+                <a
+                    href="music/"
+                    class="interactive">
+
+                    music
+
+                </a>
+
+                <a
+                    href="socials/"
+                    class="interactive">
+
+                    socials
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =====================================================
+     AUDIO
+===================================================== -->
+
+<audio
+    id="audio"
+    preload="auto"
+    crossorigin="anonymous"
+    src="https://5trikele5s.github.io/assets/songs/5TRIKELE5S%20-%20DRIVING%20OVERTIME.m4a">
+</audio>
+
+<!-- =====================================================
+     PERSISTENT PLAYER
+===================================================== -->
+
+<div
+    class="player"
+    id="player">
+
+    <button
+        class="player-button interactive"
+        id="playButton"
+        aria-label="Play driving overtime">
+
+        ▶
+
+    </button>
+
+    <div class="player-info">
+
+        <div class="player-track">
+            driving overtime
+        </div>
+
+        <div class="player-status">
+            5TRIKELE5S / first release
+        </div>
+
+    </div>
+
+    <div class="player-time" id="playerTime">
+        0:00
+    </div>
+
+    <div
+        class="player-wave"
+        aria-hidden="true">
+
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+
+    </div>
+
+    <div class="player-progress">
+
+        <div
+            class="player-progress-fill"
+            id="progressFill">
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   CORE
+========================================================= */
+
+const root =
+    document.documentElement;
+
+const body =
+    document.body;
+
+
+/* =========================================================
+   CURSOR
+========================================================= */
+
+const cursor =
+    document.querySelector(".cursor");
+
+const cursorRed =
+    document.querySelector(".cursor-ghost-red");
+
+const cursorBlue =
+    document.querySelector(".cursor-ghost-blue");
+
+const cursorLabel =
+    document.querySelector(".cursor-label");
+
+let mouseX =
+    window.innerWidth / 2;
+
+let mouseY =
+    window.innerHeight / 2;
+
+let cursorX =
+    mouseX;
+
+let cursorY =
+    mouseY;
+
+window.addEventListener("mousemove", (event) => {
+
+    mouseX =
+        event.clientX;
+
+    mouseY =
+        event.clientY;
+
+    root.style.setProperty(
+        "--mx",
+        `${(mouseX / window.innerWidth) * 100}%`
+    );
+
+    root.style.setProperty(
+        "--my",
+        `${(mouseY / window.innerHeight) * 100}%`
+    );
+
+});
+
+function animateCursor() {
+
+    cursorX +=
+        (mouseX - cursorX) * .18;
+
+    cursorY +=
+        (mouseY - cursorY) * .18;
+
+    cursor.style.left =
+        cursorX + "px";
+
+    cursor.style.top =
+        cursorY + "px";
+
+    cursorRed.style.left =
+        (cursorX - 3) + "px";
+
+    cursorRed.style.top =
+        cursorY + "px";
+
+    cursorBlue.style.left =
+        (cursorX + 3) + "px";
+
+    cursorBlue.style.top =
+        cursorY + "px";
+
+    requestAnimationFrame(
+        animateCursor
+    );
+}
+
+animateCursor();
+
+
+/* =========================================================
+   INTERACTIVE ELEMENTS
+========================================================= */
+
+function bindInteractive() {
+
+    document
+        .querySelectorAll(".interactive")
+        .forEach((element) => {
+
+            element.addEventListener(
+                "mouseenter",
+                () => {
+
+                    cursor.classList.add(
+                        "active"
+                    );
+
+                    cursorRed.style.opacity =
+                        ".35";
+
+                    cursorBlue.style.opacity =
+                        ".35";
+
+                    if (
+                        element.classList
+                            .contains("enter")
+                    ) {
+
+                        cursorLabel.classList
+                            .add("show");
+
+                    }
+
+                }
+            );
+
+            element.addEventListener(
+                "mouseleave",
+                () => {
+
+                    cursor.classList.remove(
+                        "active"
+                    );
+
+                    cursorRed.style.opacity =
+                        "0";
+
+                    cursorBlue.style.opacity =
+                        "0";
+
+                    cursorLabel.classList
+                        .remove("show");
+
+                }
+            );
+
+            element.addEventListener(
+                "click",
+                () => {
+
+                    smallGlitch();
+
+                }
+            );
+
+        });
+
+}
+
+bindInteractive();
+
+
+/* =========================================================
+   MAIN GLITCH ENGINE
+========================================================= */
+
+const mainTitle =
+    document.getElementById(
+        "mainTitle"
+    );
+
+const releaseArt =
+    document.getElementById(
+        "releaseArt"
+    );
+
+function glitchTitle() {
+
+    mainTitle.classList.add(
+        "glitch"
+    );
+
+    root.style.setProperty(
+        "--glitch",
+        `${(Math.random() * 8 - 4).toFixed(2)}px`
+    );
+
+    root.style.setProperty(
+        "--rgb",
+        `${(Math.random() * 7 + 2).toFixed(2)}px`
+    );
+
+    setTimeout(() => {
+
+        mainTitle.classList.remove(
+            "glitch"
+        );
+
+    }, 110);
+
+    setTimeout(() => {
+
+        mainTitle.classList.add(
+            "glitch"
+        );
+
+    }, 160);
+
+    setTimeout(() => {
+
+        mainTitle.classList.remove(
+            "glitch"
+        );
+
+        root.style.setProperty(
+            "--glitch",
+            "0px"
+        );
+
+    }, 260);
+
+}
+
+function smallGlitch() {
+
+    body.classList.add(
+        "glitching"
+    );
+
+    releaseArt.classList.add(
+        "glitch-art"
+    );
+
+    setTimeout(() => {
+
+        body.classList.remove(
+            "glitching"
+        );
+
+        releaseArt.classList.remove(
+            "glitch-art"
+        );
+
+    }, 100);
+
+}
+
+function signalLoss() {
+
+    body.classList.add(
+        "signal-loss"
+    );
+
+    setTimeout(() => {
+
+        body.classList.remove(
+            "signal-loss"
+        );
+
+    }, 120);
+
+}
+
+
+/* RANDOM GLITCHES */
+
+setInterval(() => {
+
+    if (
+        Math.random() > .32
+    ) {
+
+        glitchTitle();
+
+    }
+
+}, 3700);
+
+
+/* RANDOM MICRO GLITCH */
+
+setInterval(() => {
+
+    if (
+        Math.random() > .55
+    ) {
+
+        smallGlitch();
+
+    }
+
+}, 1700);
+
+
+/* RARE SIGNAL LOSS */
+
+setInterval(() => {
+
+    if (
+        Math.random() > .88
+    ) {
+
+        signalLoss();
+
+    }
+
+}, 7000);
+
+
+/* =========================================================
+   PARALLAX
+========================================================= */
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        root.style.setProperty(
+            "--scroll",
+            window.scrollY
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SIGNAL INDEX
+========================================================= */
+
+const sections = [
+
+    document.getElementById("void"),
+    document.getElementById("release"),
+    document.getElementById("genre"),
+    document.getElementById("transmission"),
+    document.getElementById("end")
+
+];
+
+const signalButtons =
+    document.querySelectorAll(
+        ".signal-index button"
+    );
+
+const observer =
+    new IntersectionObserver(
+        (entries) => {
+
+            entries.forEach(
+                (entry) => {
+
+                    if (
+                        !entry.isIntersecting
+                    ) return;
+
+                    signalButtons
+                        .forEach(
+                            (button) => {
+
+                                button.classList
+                                    .remove(
+                                        "active"
+                                    );
+
+                            }
+                        );
+
+                    const active =
+                        document.querySelector(
+                            `.signal-index button[data-target="${entry.target.id}"]`
+                        );
+
+                    if (active) {
+
+                        active.classList.add(
+                            "active"
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold: .45
+        }
+    );
+
+sections.forEach(
+    section =>
+        observer.observe(section)
+);
+
+signalButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const target =
+                    document.getElementById(
+                        button.dataset.target
+                    );
+
+                if (!target) return;
+
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   TITLE MOUSE MOVEMENT
+========================================================= */
+
+document.addEventListener(
+    "mousemove",
+    (event) => {
+
+        const x =
+            (
+                event.clientX /
+                window.innerWidth -
+                .5
+            ) * 2;
+
+        const y =
+            (
+                event.clientY /
+                window.innerHeight -
+                .5
+            ) * 2;
+
+        mainTitle.style.transform =
+            `translate(${x * 5}px,${y * 3}px)`;
+
+    }
+);
+
+
+/* =========================================================
+   REAL AUDIO PLAYER
+========================================================= */
+
+const audio =
+    document.getElementById(
+        "audio"
+    );
+
+const player =
+    document.getElementById(
+        "player"
+    );
+
+const playButton =
+    document.getElementById(
+        "playButton"
+    );
+
+const progressFill =
+    document.getElementById(
+        "progressFill"
+    );
+
+const playerTime =
+    document.getElementById(
+        "playerTime"
+    );
+
+let audioContext = null;
+let analyser = null;
+let source = null;
+let frequencyData = null;
+let audioReady = false;
+
+
+/* =========================================================
+   AUDIO CONTEXT
+========================================================= */
+
+function setupAudio() {
+
+    if (audioReady) {
+
+        if (
+            audioContext &&
+            audioContext.state === "suspended"
+        ) {
+
+            audioContext.resume().catch(
+                () => {}
+            );
+
+        }
+
+        return true;
+
+    }
+
+    try {
+
+        audioContext =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+        analyser =
+            audioContext.createAnalyser();
+
+        analyser.fftSize = 256;
+
+        analyser.smoothingTimeConstant =
+            .82;
+
+        frequencyData =
+            new Uint8Array(
+                analyser.frequencyBinCount
+            );
+
+        source =
+            audioContext.createMediaElementSource(
+                audio
+            );
+
+        source.connect(
+            analyser
+        );
+
+        analyser.connect(
+            audioContext.destination
+        );
+
+        audioReady = true;
+
+        return true;
+
+    } catch (error) {
+
+        /*
+            Playback must still work even if the visualizer
+            cannot be created (for example, a browser/CORS
+            restriction affecting MediaElementSource).
+        */
+        console.warn(
+            "Audio visualizer unavailable:",
+            error
+        );
+
+        audioContext = null;
+        analyser = null;
+        source = null;
+        frequencyData = null;
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================================
+   PLAY / PAUSE
+========================================================= */
+
+playButton.addEventListener(
+    "click",
+    async () => {
+
+        if (audio.paused) {
+
+            /*
+                Start the actual <audio> element first.
+                The visualizer is optional and must never block playback.
+            */
+            try {
+
+                await audio.play();
+
+                setupAudio();
+
+                if (
+                    audioContext &&
+                    audioContext.state === "suspended"
+                ) {
+
+                    await audioContext.resume();
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "driving overtime could not play:",
+                    error
+                );
+
+                console.error(
+                    "Audio source:",
+                    audio.currentSrc || audio.src
+                );
+
+            }
+
+        } else {
+
+            audio.pause();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   AUDIO EVENTS
+========================================================= */
+
+audio.addEventListener(
+    "error",
+    () => {
+
+        console.error(
+            "Audio file failed to load:",
+            audio.error,
+            audio.currentSrc || audio.src
+        );
+
+    }
+);
+
+audio.addEventListener(
+    "play",
+    () => {
+
+        player.classList.add(
+            "playing"
+        );
+
+        body.classList.add(
+            "music-playing"
+        );
+
+        playButton.textContent =
+            "Ⅱ";
+
+    }
+);
+
+audio.addEventListener(
+    "pause",
+    () => {
+
+        player.classList.remove(
+            "playing"
+        );
+
+        body.classList.remove(
+            "music-playing"
+        );
+
+        playButton.textContent =
+            "▶";
+
+    }
+);
+
+audio.addEventListener(
+    "ended",
+    () => {
+
+        player.classList.remove(
+            "playing"
+        );
+
+        body.classList.remove(
+            "music-playing"
+        );
+
+        playButton.textContent =
+            "▶";
+
+        root.style.setProperty(
+            "--audio",
+            "0"
+        );
+
+        root.style.setProperty(
+            "--bass",
+            "0"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+audio.addEventListener(
+    "timeupdate",
+    () => {
+
+        if (
+            !audio.duration ||
+            isNaN(audio.duration)
+        ) return;
+
+        const percentage =
+            (
+                audio.currentTime /
+                audio.duration
+            ) * 100;
+
+        progressFill.style.width =
+            percentage + "%";
+
+        const minutes =
+            Math.floor(
+                audio.currentTime / 60
+            );
+
+        const seconds =
+            Math.floor(
+                audio.currentTime % 60
+            )
+            .toString()
+            .padStart(2,"0");
+
+        playerTime.textContent =
+            `${minutes}:${seconds}`;
+
+    }
+);
+
+
+/* =========================================================
+   AUDIO VISUALIZER
+========================================================= */
+
+let lastBass =
+    0;
+
+function audioVisuals() {
+
+    if (
+        !analyser ||
+        !frequencyData
+    ) {
+
+        requestAnimationFrame(
+            audioVisuals
+        );
+
+        return;
+
+    }
+
+    analyser.getByteFrequencyData(
+        frequencyData
+    );
+
+    let total = 0;
+
+    for (
+        let i = 0;
+        i < frequencyData.length;
+        i++
+    ) {
+
+        total +=
+            frequencyData[i];
+
+    }
+
+    const average =
+        total /
+        frequencyData.length /
+        255;
+
+    /* LOW FREQUENCIES */
+
+    let bassTotal = 0;
+
+    const bassCount =
+        Math.min(
+            16,
+            frequencyData.length
+        );
+
+    for (
+        let i = 0;
+        i < bassCount;
+        i++
+    ) {
+
+        bassTotal +=
+            frequencyData[i];
+
+    }
+
+    const bass =
+        bassTotal /
+        bassCount /
+        255;
+
+    root.style.setProperty(
+        "--audio",
+        average.toFixed(3)
+    );
+
+    root.style.setProperty(
+        "--bass",
+        bass.toFixed(3)
+    );
+
+    root.style.setProperty(
+        "--rgb",
+        `${(
+            2 +
+            average * 10
+        ).toFixed(2)}px`
+    );
+
+    /*
+        Bass spike = glitch.
+        This makes the website react to actual
+        moments in the song rather than simply
+        looping a visual animation.
+    */
+
+    if (
+        bass > .72 &&
+        bass - lastBass > .18
+    ) {
+
+        smallGlitch();
+
+    }
+
+    lastBass = bass;
+
+    requestAnimationFrame(
+        audioVisuals
+    );
+
+}
+
+audioVisuals();
+
+
+/* =========================================================
+   PLAYER CLICK-TO-SEEK
+========================================================= */
+
+document
+    .querySelector(".player-progress")
+    .addEventListener(
+        "click",
+        (event) => {
+
+            if (
+                !audio.duration
+            ) return;
+
+            const rect =
+                event.currentTarget
+                    .getBoundingClientRect();
+
+            const percentage =
+                (
+                    event.clientX -
+                    rect.left
+                ) /
+                rect.width;
+
+            audio.currentTime =
+                percentage *
+                audio.duration;
+
+        }
+    );
+
+
+/* =========================================================
+   COVER CLICK
+========================================================= */
+
+releaseArt.addEventListener(
+    "click",
+    async () => {
+
+        if (audio.paused) {
+
+            try {
+
+                await audio.play();
+
+                setupAudio();
+
+            } catch (error) {
+
+                console.error(
+                    "driving overtime could not play:",
+                    error
+                );
+
+            }
+
+        } else {
+
+            audio.pause();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SECRET KEYBOARD SIGNAL
+========================================================= */
+
+let secretSequence = "";
+
+const secretCode =
+    "void";
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        /*
+            Ignore typing inside inputs,
+            should we ever add them later.
+        */
+
+        if (
+            event.target.tagName ===
+            "INPUT"
+        ) return;
+
+        secretSequence +=
+            event.key.toLowerCase();
+
+        if (
+            secretSequence.length >
+            secretCode.length
+        ) {
+
+            secretSequence =
+                secretSequence.slice(
+                    -secretCode.length
+                );
+
+        }
+
+        if (
+            secretSequence ===
+            secretCode
+        ) {
+
+            body.style.filter =
+                "contrast(1.25) saturate(1.35)";
+
+            glitchTitle();
+
+            signalLoss();
+
+            setTimeout(
+                () => {
+
+                    body.style.filter =
+                        "";
+
+                },
+                900
+            );
+
+            secretSequence =
+                "";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   RANDOM RGB DRIFT WHILE PLAYING
+========================================================= */
+
+setInterval(
+    () => {
+
+        if (
+            !body.classList.contains(
+                "music-playing"
+            )
+        ) return;
+
+        const amount =
+            2 +
+            Math.random() * 8;
+
+        root.style.setProperty(
+            "--rgb",
+            `${amount.toFixed(2)}px`
+        );
+
+    },
+    180
+);
+
+</script>
+
+</body>
+</html>
